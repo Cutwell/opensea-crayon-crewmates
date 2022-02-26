@@ -9,25 +9,41 @@ import os
 def get_paths(dir_path):
     paths = []
 
-    for roots, dirs, files in os.walk(dir_path):
+    absolute_dir_path = os.getcwd() + dir_path
+
+    for roots, dirs, files in os.walk(absolute_dir_path):
         for f in files:
-            paths.append(f)
+            paths.append(f"{absolute_dir_path}/{f}")
+
+    print(f"* Found {len(paths)} files in {absolute_dir_path}")
 
     return paths
 
 def mutate(fg_paths, bg_paths, save_dir):
     """ generate all permutations of foregrounds and backgrounds """
-    
-    for a, fg in enumerate(fg_array):
-        fg_img = Image.open(fg)
-        for b, bg in enumerate(bg_array):
-            bg_img = Image.open(bg)
 
-            bg_img.paste(fg_img)
-            bg_img.save(f'{save_dir}/{a}_{b}.png')
+    print(f"! Mutating {len(fg_paths)} foregrounds and {len(bg_paths)} backgrounds")
+
+    absolute_save_dir = os.getcwd() + save_dir
+    
+    for a, fg in enumerate(fg_paths):
+        fg_img = Image.open(fg)
+        fg_img = fg_img.convert("RGBA")
+        
+        for b, bg in enumerate(bg_paths):
+            bg_img = Image.open(bg)
+            bg_img = bg_img.convert("RGBA")
+
+            bg_img.paste(fg_img, (0,0), fg_img)
+            
+            bg_img.save(f'{absolute_save_dir}/{a}_{b}.png', format="png")
+
+            print(f'* Created: {absolute_save_dir}/{a}_{b}.png')
 
 def holo(img_path, holo_path, save_dir):
     """ generate a single holo for a given image/holo """
+
+    print("! Running mutate() with Holo wrapper")
 
     # run mutate function, but for single fg/bg set, not multiple paths
     mutate([holo_path], [img_path], save_dir)
@@ -39,4 +55,4 @@ if __name__ == "__main__":
     
     save_dir = "/assets/assets"
 
-    mutate(bg_paths, fg_paths, save_dir)
+    mutate(fg_paths, bg_paths, save_dir)
