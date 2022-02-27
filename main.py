@@ -60,22 +60,22 @@ def holo(bg_paths, fg_paths, save_dir):
 
             frames = []
 
-            base_frame = fg_img.copy().convert("RGBA")
-            base_frame.putalpha(64)
+            #base_frame = fg_img.copy().convert("RGBA")
+            #base_frame.putalpha(64)
 
             for frame in ImageSequence.Iterator(fg_img):
                 frame = frame.convert("RGBA")
-                frame.putalpha(64)
+                #frame.putalpha(128)
             
-                layer = Image.new('RGBA', (img_w, img_h), (0, 0, 0, 0))
+                #layer = Image.new('RGBA', (img_w, img_h), (0, 0, 0, 0))
                 
-                layer.paste(bg_img, (0,0), mask=bg_img)
+                #layer.paste(bg_img, (0,0), mask=bg_img)
 
-                layer.paste(base_frame, (0,0), mask=base_frame)
+                #layer.paste(base_frame, (0,0), mask=base_frame)
             
-                layer.paste(frame, (0,0), mask=frame)
+                #layer.paste(frame, (0,0), mask=frame)
 
-                #layer = Image.blend(bg_img, frame, alpha=0.5)
+                layer = Image.blend(bg_img, frame, alpha=0.1)
             
                 frames.append(layer)
 
@@ -83,7 +83,7 @@ def holo(bg_paths, fg_paths, save_dir):
                 f'{absolute_save_dir}/{a}_{b}.gif',
                 save_all=True,
                 append_images=frames[1:],
-                duration=80,
+                duration=120,
                 loop=1,
                 optimize=False
             )
@@ -111,15 +111,15 @@ def resize(asset_paths, save_dir, size):
     
 
 if __name__ == "__main__":
-    #bg_paths = get_paths("/assets/bg")
-    #fg_paths = get_paths("/assets/fg")
-    holo_paths = get_paths("/assets/holo")
-    #asset_paths = get_paths("/assets/assets")
-    resize_paths = get_paths("/assets/resize")
+    #bg_paths = get_paths("/assets/dev/bg")
+    #fg_paths = get_paths("/assets/dev/fg")
+    holo_paths = get_paths("/assets/dev/holo")
+    #asset_paths = get_paths("/assets/dev/assets")
+    resize_paths = get_paths("/assets/dev/resize")
     
-    #save_dir = "/assets/assets"
-    #save_dir = "/assets/resize"
-    save_dir = "/assets/shiny"
+    #save_dir = "/assets/dev/assets"
+    #save_dir = "/assets/dev/resize"
+    save_dir = "/assets/dev/shiny"
 
     #mutate(fg_paths, bg_paths, save_dir)
     #resize(asset_paths, save_dir, (560, 560))
