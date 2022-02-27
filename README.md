@@ -1,3 +1,5 @@
+<link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="/feed.xml">
+
 ![A rainbow with a scribbled spaceman](assets/profile/banner.png "A rainbow with a scribbled spaceman")
 <h1 align="center">Crayon Crewmates</h1>
 
