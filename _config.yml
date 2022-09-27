@@ -1,4 +1,5 @@
-remote_theme: Cutwell/featherweight
+remote_theme: rosario/kasper
+plugins:
+  - jekyll-feed
 title: Crayon Crewmates
-layout: post
 description: A playful, unique, NFT collection.
